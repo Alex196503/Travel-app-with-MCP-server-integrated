@@ -66,7 +66,7 @@ export async function action({ request, params }: Route.ActionArgs) {
 }
 
 export async function loader({ params, request }: Route.LoaderArgs) {
-  requireAuthOnServer(request)
+  await requireAuthOnServer(request)
   const url = new URL(request.url)
   const isEditing = url.searchParams.get("edit") === "true"
   const reviewId = url.searchParams.get("reviewId")
