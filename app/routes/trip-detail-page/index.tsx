@@ -54,7 +54,7 @@ export const meta = () =>
   )
 
 export async function loader({ params, request }: Route.LoaderArgs) {
-  requireAuthOnServer(request)
+  await requireAuthOnServer(request)
   try {
     const tripID = params.id || ""
     if (!tripID) {

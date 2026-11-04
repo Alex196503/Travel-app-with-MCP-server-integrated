@@ -1,10 +1,11 @@
 .DS_Store
 .env
+.env.docker
+/.env.docker
 /node_modules/
 /.vscode/
 
 # React Router
 /.react-router/
 /build/
-
 /generated/prisma

@@ -24,7 +24,7 @@ export const meta = () =>
   )
 
 export async function loader({ params, request }: Route.LoaderArgs) {
-  requireAuthOnServer(request)
+  await requireAuthOnServer(request)
   try {
     const url = new URL(request.url)
     const category = url.searchParams.get("category") || ""

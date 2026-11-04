@@ -2,15 +2,29 @@
 Info:(to be completed / done)
 
 ## Local Docker setup
-Set `DB_PASSWORD` and `SECRET_KEY` in your untracked `.env` file before starting
-Compose. The database port is bound to `127.0.0.1`, so it is only published on
-the local machine. The backend and Prisma seed use `DB_PASSWORD` to connect.
-Use a URL-safe password (for example, generate a random hexadecimal value with
-`node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`),
-because Compose also places it in Prisma's `DATABASE_URL`. If the MySQL data
-volume was initialized before setting `DB_PASSWORD`, update its existing root
-password; MySQL initialization variables do not change credentials in an
-already-initialized volume.
+Keep `.env` for running the backend directly on the host. Docker uses a separate,
+untracked `.env.docker` file so its database credentials do not override the
+passwordless local MySQL configuration.
+
+Copy `.env.docker.example` to `.env.docker`, set distinct random hexadecimal
+values for `DOCKER_DB_PASSWORD` and `DOCKER_DB_ROOT_PASSWORD`, then start Docker:
+
+```powershell
+Copy-Item .env.docker.example .env.docker
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+docker compose --env-file .env.docker up --build
+```
+
+Use one generated value for each password. The Docker backend connects as the
+limited `voyageflow` database user; MySQL root is reserved for administration.
+The host database port is bound to `127.0.0.1` and defaults to `3307`. Docker
+containers connect to MySQL over the private Compose network at `db:3306`.
+
+MySQL's initialization variables only create users and set passwords when the
+data directory is empty. If you already have the old passwordless Docker data
+volume, do not delete it if you need its data. Either migrate/backup that data
+before recreating the volume, or create the `voyageflow` user and set the root
+password manually in the existing MySQL instance to match `.env.docker`.
 
 
 ## Database schema
