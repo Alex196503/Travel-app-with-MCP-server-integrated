@@ -13,7 +13,7 @@ import { toast } from "react-toastify"
 import { ToastContainer } from "react-toastify"
 import { useState } from "react"
 import { type CSSProperties } from "react"
-import pkg from "react-spinners"
+import { ClipLoader } from "react-spinners"
 import { CountryCard } from "~/routes/api/local_components/CountryCard"
 import {
   useCountdown,
@@ -62,7 +62,6 @@ export async function loader({ params, request }: Route.LoaderArgs) {
 
 export default function ApiPage() {
   const redirectTo = useNavigate()
-  const { ClipLoader } = pkg
   const { countries, error } = useLoaderData<typeof loader>()
   const [search, setSearchedValue] = useState("")
   const { countdown, setCountdown, formattedTime, isCounting } =

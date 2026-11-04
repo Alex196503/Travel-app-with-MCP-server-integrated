@@ -33,7 +33,11 @@ class CheckoutCompletedHandler implements StripeEventHandler {
       typeof session.payment_intent === "string"
         ? session.payment_intent
         : session.payment_intent?.id
-    if (!Number.isInteger(bookingId) || bookingId <= 0 || !paymentIntent) {
+    if (
+      !Number.isInteger(bookingId) ||
+      bookingId <= 0 ||
+      !paymentIntent
+    ) {
       throw new Error(
         "Checkout session is missing a valid booking ID or payment intent."
       )
