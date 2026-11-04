@@ -27,6 +27,19 @@ before recreating the volume, or create the `voyageflow` user and set the root
 password manually in the existing MySQL instance to match `.env.docker`.
 
 
+## Stripe webhooks with Docker
+
+For local payment testing, keep the Docker services running and start the Stripe CLI in a separate terminal:
+
+```bash
+stripe login
+stripe listen --forward-to http://localhost:5000/api/payments/webhook
+
+Copy the webhook signing secret printed by stripe listen (it starts with whsec_) into STRIPE_WEBHOOK_SECRET in your local .env file. Keep that value private and do not commit it. Restart the backend container after changing .env.
+
+Leave stripe listen running while testing payments. It forwards Stripe events to the Docker backend through the host's port 5000.
+```
+
 ## Database schema
 Our relational database(made in SQL) follows a relational structure to manage bookings, scheduling, countries, users, ticketing and reviews. The following ERD diagram was designed in Lucidchart to map out the database arhitecture, relationships, and core functionalities before writing any SQL code or setting up the database.
 > [!NOTE]
