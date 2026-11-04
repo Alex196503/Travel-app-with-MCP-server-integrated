@@ -34,6 +34,7 @@ export default function LoginPage() {
         <form
           className="flex flex-col gap-y-5"
           method="post"
+          action="/api/auth/login"
           noValidate
           onSubmit={handleSubmit}
         >

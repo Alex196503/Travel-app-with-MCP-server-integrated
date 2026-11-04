@@ -17,6 +17,7 @@ services:
       - .env
     environment:
       SERVER_API_URL: http://server:5000/api
+      VITE_API_PROXY_TARGET: http://server:5000
     depends_on:
       - server
     restart: unless-stopped
@@ -38,7 +39,7 @@ services:
     environment:
       DB_HOST: db
       DB_PORT: 3306
-      DATABASE_URL: mysql://${DB_USER:-root}:${DB_PASSWORD:?Set DB_PASSWORD in .env}@db:3306/${DB_NAME:-turism_db}
+      DATABASE_URL: mysql://${DB_USER:-root}@db:3306/${DB_NAME:-turism_db}
     depends_on:
       db:
         condition: service_healthy
@@ -48,7 +49,7 @@ services:
     image: mysql:8.0
     container_name: tourism-db
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: ${DB_NAME:-turism_db}
     volumes:
       - tourism-db-data:/var/lib/mysql
