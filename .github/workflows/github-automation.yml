@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SECRET_STRIPE_KEY: "dummy-stripe-key-for-ci"
+      GEMINI_API_KEY: "dummy-gemini-key-for-ci"
       NODE_ENV: test
       SECRET_KEY: test-only-secret-for-ci
     steps:
