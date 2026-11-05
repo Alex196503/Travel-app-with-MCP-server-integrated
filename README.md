@@ -1,5 +1,30 @@
 # Tourism application
-Info:(to be completed / done), import the CRON file in the ts server to ensure it works
+VoyageFlow is a full-stack travel booking platform for discovering trips, managing reservations, processing Stripe payments, and sharing traveler reviews, built with React, Node.js, Prisma, and MySQL.
+
+# Key features
+
+* **Trip discovery**: Browse trips, search and filter by category, country, and price, then view trip details and images.
+* **Booking management**: Reserve seats, view bookings, and manage or cancel reservations.
+* **Stripe payments**: Create checkout sessions and process payment events through Stripe webhooks.
+* **Authentication and profiles**: Register and log in, verify email, reset passwords, and update profile details.
+* **Reviews and replies**: Create, edit, and delete trip reviews and threaded replies.
+* **Real-time notifications**: Deliver booking and payment updates through Server-Sent Events.
+* **AI-assisted country information**: A Gemini-powered assistant uses an MCP server with tools for country lookup, regional lists, comparisons, population rankings, and language searches.
+* **Media and email integrations**: Cloudinary image storage and Nodemailer email delivery.
+* **Ticket chat over WebSockets**: Authenticated, real-time ticket conversations over WebSockets, with messages saved to the database.
+* **Testing**: Vitest unit tests for booking, calendar, and utility logic; React Testing Library component tests for forms and UI interactions; and Supertest API route tests with mocked services. These are route-level tests, not full database end-to-end tests.
+
+# Tech Stack
+
+* **Languages**: TypeScript
+* **Frontend**: React, React Router, Tailwind CSS, Vite
+* **Backend**: Node.js, Express, REST APIs, WebSockets (ws), Server-Sent Events
+* **Database**: MySQL, Prisma ORM
+* **Integrations**: Stripe Checkout and webhooks, Google Gemini, Model Context Protocol (MCP), Cloudinary, Nodemailer
+* **Validation and auth**: Zod, JWT, bcrypt
+* **Testing**: Vitest, React Testing Library, user-event, Supertest, jsdom
+* **Dev-ops**: Docker, Railway.
+
 
 ## Local Docker setup
 Keep `.env` for running the backend directly on the host. Docker uses a separate,
@@ -41,6 +66,10 @@ Copy the webhook signing secret printed by stripe listen (it starts with whsec_)
 
 Leave stripe listen running while testing payments. It forwards Stripe events to the Docker backend through the host's port 5000.
 
+## Deployment 
+
+I successfully deployed the application to production using Render to showcase it as a functional MVP. Although some features like cookies and SMTP email delivery encountered configuration limits in the deployed environment and were left scaled back, the complete feature set remains fully implemented and operational on localhost.
+
 ## Database schema
 Our relational database(made in SQL) follows a relational structure to manage bookings, scheduling, countries, users, ticketing and reviews. The following ERD diagram was designed in Lucidchart to map out the database arhitecture, relationships, and core functionalities before writing any SQL code or setting up the database.
 > [!NOTE]
@@ -61,3 +90,8 @@ Our relational database(made in SQL) follows a relational structure to manage bo
 ## Formal norms & Normalization
 * As far as the formal norms go, the **first normal form(1NF)** is respected across the database. For example, while storing multiple trip images as an array within a single column might have seemed convenient, it would have violated 1NF. To maintain atomicity and proper relational integrity, these were refactored into a separate images table with a One-to-Many relationship. The database schema inherently satisfies the **Second Normal Form (2NF)** because all tables utilize a single, atomic primary key (such as a unique id) rather than composite candidate keys, completely eliminating the possibility of partial dependencies.
 * The schema deliberately accommodates or highlights transitive dependencies (where a non-key attribute depends on another non-key attribute, such as available_seats depending on total_seats, or token expiration linked to a token), which technically creates a deviation from the strict rules of the **Third Normal Form (3NF)** in favor of application performance and caching convenience.
+
+## Project status:
+
+* Status: **Completed**
+* Author: Moldovan Alex-Cristian
