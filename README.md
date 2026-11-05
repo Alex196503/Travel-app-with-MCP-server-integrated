@@ -12,7 +12,7 @@ VoyageFlow is a full-stack travel booking platform for discovering trips, managi
 * **AI-assisted country information**: A Gemini-powered assistant uses an MCP server with tools for country lookup, regional lists, comparisons, population rankings, and language searches.
 * **Media and email integrations**: Cloudinary image storage and Nodemailer email delivery.
 * **Ticket chat over WebSockets**: Authenticated, real-time ticket conversations over WebSockets, with messages saved to the database.
-* **Testing**: Vitest unit tests for booking, calendar, and utility logic; React Testing Library component tests for forms and UI interactions; and Supertest API route tests with mocked services. These are route-level tests, not full database end-to-end tests.
+
 
 # Tech Stack
 
@@ -23,8 +23,13 @@ VoyageFlow is a full-stack travel booking platform for discovering trips, managi
 * **Integrations**: Stripe Checkout and webhooks, Google Gemini, Model Context Protocol (MCP), Cloudinary, Nodemailer
 * **Validation and auth**: Zod, JWT, bcrypt
 * **Testing**: Vitest, React Testing Library, user-event, Supertest, jsdom
-* **Dev-ops**: Docker, Railway.
+* **Dev-ops**: Docker, Railway, Github-actions.
 
+## Testing and CI
+
+Vitest unit tests cover booking, calendar, and utility logic; React Testing Library tests cover forms and UI interactions; and Supertest tests exercise API routes with mocked services. These are route-level tests, not full database end-to-end tests.
+
+GitHub Actions runs the TypeScript checks and Vitest test suite on every push and pull request. Open a pull request and check its **Checks** tab, or visit the repository's **Actions** tab, to see whether the checks pass. Future tests added to the suite will run automatically in CI.
 
 ## Local Docker setup
 Keep `.env` for running the backend directly on the host. Docker uses a separate,
@@ -39,8 +44,6 @@ Copy-Item .env.docker.example .env.docker
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 docker compose --env-file .env.docker up --build
 ```
-
-
 
 Use one generated value for each password. The Docker backend connects as the
 limited `voyageflow` database user; MySQL root is reserved for administration.
