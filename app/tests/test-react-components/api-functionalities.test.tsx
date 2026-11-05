@@ -1,7 +1,6 @@
 // @vitest-environment jsdom
 import { fireEvent, render, screen } from "@testing-library/react"
-import { afterEach } from "node:test"
-import { test, expect, describe, beforeEach, vi } from "vitest"
+import { afterEach, test, expect, describe, beforeEach, vi } from "vitest"
 import ApiPage from "~/routes/api"
 import "@testing-library/jest-dom/vitest"
 import { act } from "react"

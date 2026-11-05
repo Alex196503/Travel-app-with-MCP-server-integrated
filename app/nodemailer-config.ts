@@ -11,14 +11,15 @@ export const transporter = nodemailer.createTransport({
   }
 })
 
-//Function that tries to connect to the SMTP Gmail Server
-transporter.verify((err, _success) => {
-  if (err) {
-    console.log("Error while connecting to the SMTP server! " + err)
-  } else {
-    console.log("SMTP server ready to send messages!")
-  }
-})
+if (process.env.NODE_ENV !== "test") {
+  transporter.verify((err, _success) => {
+    if (err) {
+      console.log("Error while connecting to the SMTP server! " + err)
+    } else {
+      console.log("SMTP server ready to send messages!")
+    }
+  })
+}
 
 //Function that sends the mail with the link to ensure that user's email can be validated
 export default async function sendEmailNotification(
