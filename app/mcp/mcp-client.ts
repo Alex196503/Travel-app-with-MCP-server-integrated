@@ -19,7 +19,6 @@ interface IMCPTextExtractor {
 }
 
 class MCPTextExtractor implements IMCPTextExtractor {
-
   //Type guard to safely validate and narrow an unknown item from an MCP tool response into a structured text object: { type: "text", text: string }.
   isTextContent(
     item: unknown
@@ -33,7 +32,7 @@ class MCPTextExtractor implements IMCPTextExtractor {
       typeof (item as any).text === "string"
     )
   }
-  
+
   //Extracts and validates the text string from an MCP tool response content array.
   getTextContent(content: unknown): string {
     if (!Array.isArray(content)) {
@@ -58,7 +57,9 @@ class MCPOrchestrator {
   private mcpTextExtractor: IMCPTextExtractor
   constructor(mcpTextExtractor: IMCPTextExtractor) {
     const apiKey = process.env.GEMINI_API_KEY
-    if (!apiKey) throw new Error("GEMINI_API_KEY is not configured.")
+    if (!apiKey && process.env.NODE !== "test") {
+      throw new Error("GEMINI_API_KEY is not configured.")
+    }
     this.ai = new GoogleGenAI({ apiKey })
     this.mcpTextExtractor = mcpTextExtractor
   }

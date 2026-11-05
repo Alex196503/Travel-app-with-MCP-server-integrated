@@ -1,0 +1,36 @@
+name: "CI/CD Pipeline"
+
+permissions:
+  contents: read
+
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      SECRET_STRIPE_KEY: "dummy-stripe-key-for-ci"
+      GEMINI_API_KEY: "dummy-gemini-key-for-ci"
+      NODE_ENV: test
+      SECRET_KEY: test-only-secret-for-ci
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Run TypeScript compilation
+        run: npm run typecheck
+
+      - name: Run tests
+        run: npm test -- --run

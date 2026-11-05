@@ -12,8 +12,9 @@ import {
 } from "~/tests/test-mocks/user-data-mocks"
 import type { NextFunction } from "express"
 
-const { mockUpdateProfile } = vi.hoisted(() => ({
-  mockUpdateProfile: vi.fn()
+const { mockUpdateProfile, mockFindUser } = vi.hoisted(() => ({
+  mockUpdateProfile: vi.fn(),
+  mockFindUser: vi.fn()
 }))
 
 vi.mock("../../../server/ProfileService", () => {
@@ -113,10 +114,10 @@ vi.mock("~/utils/node-utils", async () => {
   }
 })
 
-vi.mock("../lib/prisma", () => ({
+vi.mock("../../../../prisma/prisma", () => ({
   prisma: {
     user: {
-      findUnique: vi.fn()
+      findUnique: mockFindUser
     }
   }
 }))
@@ -142,6 +143,7 @@ describe("Testing edit profile functionality", () => {
   })
 
   it("should successfully update the profile when file is valid and under size limit", async () => {
+    mockFindUser.mockResolvedValueOnce({ id: 1 })
     vi.mocked(mockUpdateProfile).mockResolvedValueOnce(
       mockUpdatedProfileResponse
     )

@@ -1,7 +1,6 @@
 // @vitest-environment jsdom
 import { fireEvent, render, screen } from "@testing-library/react"
-import { afterEach } from "node:test"
-import { test, expect, describe, beforeEach, vi } from "vitest"
+import { afterEach, test, expect, describe, beforeEach, vi } from "vitest"
 import ApiPage from "~/routes/api"
 import "@testing-library/jest-dom/vitest"
 import { act } from "react"
@@ -80,6 +79,15 @@ describe("test suite validating the user interaction with API Countries page", (
 })
 
 describe("test suite validating the pagination component", () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
+  afterEach(() => {
+    vi.clearAllTimers()
+    vi.useRealTimers()
+  })
+
   test("checking if the component manages to fall back to one page", () => {
     render(
       <PaginationComponent
