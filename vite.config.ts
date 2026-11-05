@@ -22,16 +22,7 @@ export default defineConfig({
     ]
   },
   server: {
-    port: 3000,
-    proxy: {
-      "/api": {
-        target:
-          process.env.VITE_API_PROXY_TARGET ||
-          "http://localhost:5000",
-        changeOrigin: true,
-        secure: false
-      }
-    }
+    port: Number(process.env.PORT) || 3000
   },
   ssr: {
     noExternal: ["react-spinners"]

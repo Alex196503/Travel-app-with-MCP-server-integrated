@@ -86,7 +86,7 @@ export class BookingCreationService {
     setImmediate(async () => {
       try {
         if (result.user?.email) {
-          const paymentLink = `http://localhost:3000/trips`
+          const paymentLink = `${process.env.FRONTEND_TRIPS_URL}`|| "http://localhost:3000/trips"
           const emailSubject = "Booking Confirmation - VoyageFlow"
           const emailBody = `
               Hello ${result.user.name || "Traveler"},
