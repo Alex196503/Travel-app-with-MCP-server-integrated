@@ -113,7 +113,7 @@ vi.mock("~/utils/node-utils", async () => {
   }
 })
 
-vi.mock("../lib/prisma", () => ({
+vi.mock("../../../../prisma/prisma", () => ({
   prisma: {
     user: {
       findUnique: vi.fn()

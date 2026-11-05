@@ -79,6 +79,15 @@ describe("test suite validating the user interaction with API Countries page", (
 })
 
 describe("test suite validating the pagination component", () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
+  afterEach(() => {
+    vi.clearAllTimers()
+    vi.useRealTimers()
+  })
+
   test("checking if the component manages to fall back to one page", () => {
     render(
       <PaginationComponent
