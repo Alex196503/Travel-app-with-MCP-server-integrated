@@ -15,6 +15,8 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 docker compose --env-file .env.docker up --build
 ```
 
+
+
 Use one generated value for each password. The Docker backend connects as the
 limited `voyageflow` database user; MySQL root is reserved for administration.
 The host database port is bound to `127.0.0.1` and defaults to `3307`. Docker
